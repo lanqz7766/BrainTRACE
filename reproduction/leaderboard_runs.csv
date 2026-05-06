@@ -1,0 +1,23 @@
+model,family,params_b,backend,inference_cost_usd,inference_wall_h,judge_cost_usd,broadqa_closed_acc,broadqa_open_pass,3d_closed_acc,3d_open_pass,case_step_pass,case_success,adapter_flags,notes
+gpt-5.4-medium,closed-api,,openai,697.0,9.7,2.45,40.5,19.8,42.21,15.6,24.00,0.0,"--temperature 0 --max-tokens 2048 --reasoning-effort medium --parallel 4",winner on 4/6 axes; case-level Step Pass ceiling at 24%
+gpt-5.4-high,closed-api,,openai,~30+,1.0,0.22,—,—,—,—,24.05,0.0,"--reasoning-effort high (case-level reasoning only)",re-test confirms HIGH does not break the case-level Step Pass ceiling
+gpt-5,closed-api,,openai,584.0,7.4,2.27,41.8,10.5,38.38,11.7,21.67,1.43,"--temperature 0 --max-tokens 2048 --parallel 6",only model with non-zero Case Success (1/70 cases)
+gpt-5-mini,closed-api,,openai,116.0,5.5,2.10,38.6,10.6,37.76,10.4,24.52,0.0,"--temperature 0 --max-tokens 2048 --parallel 6",best $/composite ratio; ties GPT-5.4 on case-level Step Pass
+gemini-2.5-pro,closed-api,,google,147.0,4.0,1.55,37.0,14.2,32.06,13.0,10.7,0.0,"--temperature 0 --max-tokens 2048 --parallel 4",auto-thinking did not engage on multi-image MRI
+claude-opus-4-6,closed-api,,anthropic,1215.0+,4.5,1.21,40.5,9.6,30.08,6.5,23.1,0.0,"--max-tokens 2048 --parallel 4",frontier; weakest open-ended on broadQA / 3D among frontier APIs but competitive on case-level Step Pass
+qwen3.5-27b-think,open-weight,27,vllm,~28.0 (gpu-h),14.0,2.10,37.5,8.1,63.49,3.9,2.9,0.0,"--max-tokens 16384 --thinking on","best 3D-closed (+21pp over GPT-5.4); inline thinking ~6400 chars/item"
+qwen3.5-27b-brief,open-weight,27,vllm,~8.0 (gpu-h),4.0,—,—,—,49.40,—,—,—,"--max-tokens 1024 --brief-prompt","compute-fair to GPT-5.4-medium; still leads by 7.2pp on 3D-closed"
+qwen3-vl-30b-a3b,open-weight,30 (MoE),vllm,~14.0 (gpu-h),7.0,1.95,35.4,14.4,34.82,11.7,11.7,0.0,"--max-tokens 2048 --parallel 8",
+qwen3-vl-8b,open-weight,8,vllm,~10.0 (gpu-h),5.0,1.85,34.2,13.8,33.39,9.1,3.8,0.0,"--max-tokens 2048 --parallel 8",
+qwen3-vl-4b,open-weight,4,vllm,~6.0 (gpu-h),3.0,1.91,33.4,11.8,35.35,5.2,8.3,0.0,"--max-tokens 2048 --parallel 8",
+qwen2.5-vl-7b,open-weight,7,vllm,~10.0 (gpu-h),5.0,1.86,33.8,4.9,33.21,3.9,9.3,1.4,"--max-tokens 2048 --parallel 8",
+internvl3-8b,open-weight,8,vllm,~10.0 (gpu-h),5.0,2.22,36.6,6.6,37.76,—,8.3,0.0,"--max-tokens 2048 --parallel 8",reverse-scaling within InternVL3: 8B>14B>78B
+internvl3-14b,open-weight,14,vllm,~12.0 (gpu-h),6.0,2.24,35.8,8.6,34.02,—,11.2,0.0,"--max-tokens 2048 --parallel 8",
+internvl3-78b,open-weight,78,vllm,~24.0 (gpu-h),12.0,2.05,36.2,7.6,33.39,—,0.0,0.0,"--max-tokens 2048 --tp 2",
+huatuogpt-vision-7b,open-medical,7,vllm,~10.0 (gpu-h),5.0,2.22,37.2,9.9,30.19,0.0,0.2,0.0,"--max-tokens 2048 --parallel 8",
+lingshu-7b,open-medical,7,vllm,~10.0 (gpu-h),5.0,2.18,37.0,6.8,35.35,3.9,6.9,0.0,"--max-tokens 2048 --parallel 8",
+medgemma-4b-it,open-medical,4,vllm,~6.0 (gpu-h),3.0,2.26,31.4,5.4,35.00,3.9,7.6,0.0,"--max-tokens 2048 --parallel 8",
+llava-med-v1.5-7b,open-medical,7,vllm,~12.0 (gpu-h),6.0,2.10,13.5,3.8,5.43,1.3,0.2,0.0,"--max-tokens 2048 --parallel 4",multi-image architectural failure: 99.5% degenerate EOS on items with ≥4 images
+janus-pro-7b,open-weight,7,hf,~10.0 (gpu-h),5.0,2.34,20.7,1.8,22.44,0.0,0.5,0.0,"--max-tokens 2048 --parallel 4",very low 3D-closed accuracy
+m3d-lamed,native-3d,8,hf,~6.0 (gpu-h),3.0,1.92,—,—,34.19,0.0,4.8,0.0,"--volume-input --max-tokens 1024","native-volume model; consumes volume_relpath instead of image_relpaths"
+radfm,native-3d,14,hf,~12.0 (gpu-h),6.0,2.05,26.2,4.3,26.71,2.6,0.0,0.0,"--volume-input --max-tokens 1024","native-volume model with low 3D-closed accuracy"

@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.coverage
+.mypy_cache/
+.ruff_cache/
+
+# Local data — NEVER commit imagery, MR-RATE downloads, or rendered outputs
+mr_rate/
+mr_rate_*/
+braintrace_dataset/images/
+braintrace_dataset/volumes/
+outputs/
+scores/
+*.nii.gz
+*.dcm
+*.npy
+*.png
+
+# Logs and intermediates
+*.log
+.cache/
+.tmp/
+*.tmp
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

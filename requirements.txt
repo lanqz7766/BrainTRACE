@@ -1,0 +1,26 @@
+# Core
+pyarrow>=14.0
+pandas>=2.0
+numpy>=1.24
+Pillow>=10.0
+nibabel>=5.1
+SimpleITK>=2.3
+scikit-image>=0.21
+
+# Hugging Face dataset access
+huggingface-hub>=0.20
+datasets>=2.16
+
+# API VLM clients (optional — only needed if calling the corresponding model)
+openai>=1.40        # GPT-5.x family
+anthropic>=0.40     # Claude family
+google-genai>=0.3   # Gemini family
+
+# Open-weight VLM runtime (optional — see eval/README.md for choice of backend)
+# vllm>=0.6
+# transformers>=4.45
+# accelerate>=0.30
+
+# Scoring helpers
+scipy>=1.10         # bootstrap CIs
+tqdm>=4.66
