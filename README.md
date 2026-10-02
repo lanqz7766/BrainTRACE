@@ -23,7 +23,7 @@
 
 **Accepted at NeurIPS 2026, Evaluations & Datasets Track (Poster).**
 
-BrainTRACE evaluates whether vision-language models can follow the evidence chain of brain MRI interpretation: locate a finding, compare studies across time, integrate MRI sequences and spatial evidence, and reach a report-grounded clinical assessment. It separates success on individual recognition tasks from success on a complete longitudinal reasoning case.
+BrainTRACE benchmarks longitudinal, multimodal, and volumetric reasoning over brain MRI.
 
 ![BrainTRACE benchmark overview](docs/assets/braintrace-overview.png)
 
@@ -31,54 +31,46 @@ BrainTRACE evaluates whether vision-language models can follow the evidence chai
 |:---:|:---:|:---:|:---:|
 | **7,273** | **1,778** | **7,299** | **20** |
 
-## Benchmark at a glance
+## Benchmark design
 
-The release contains **6,923 source items**. Each of the 70 case-reasoning items expands into six scored steps, giving **7,273 scored VQA instances** in total.
+<p align="center">
+  <a href="docs/assets/case-reasoning-example.png"><img src="docs/assets/case-reasoning-example.png" width="900" alt="Figure 2: longitudinal MRI case and task examples across five reasoning levels"></a><br>
+  <sub>Figure 2 · Longitudinal case and task examples</sub>
+</p>
 
-| Track | Source items | What it tests |
-|---|---:|---|
-| Broad-compatible (`broadQA`) | 5,653 | Recognition, localization, burden, interval change, trajectory, and synthesis using rendered visual inputs |
-| 3D-evidence (`3D`) | 1,200 | Shared spatial-evidence targets using rendered views or supported native-volume interfaces |
-| Case reasoning (`clinical_reasoning_QA`) | 70 cases / 420 steps | A six-step longitudinal evidence chain, from anchor localization to final synthesis |
+<p align="center">
+  <a href="docs/assets/benchmark-construction.png"><img src="docs/assets/benchmark-construction.png" width="900" alt="Figure 3: report-grounded benchmark construction pipeline, with 7,273 scored instances"></a><br>
+  <sub>Figure 3 · Benchmark construction</sub>
+</p>
 
-**Five reasoning levels:** L1 recognition → L2 within-study reasoning → L3 interval comparison → L4 multi-timepoint trajectory → L5 synthesis and clinical reasoning. Thirty single-turn task templates accompany the case-reasoning track.
+## Benchmark coverage
 
-**Construction:** MR-RATE studies, reports, and segmentation-derived measurements provide the reference evidence. Task construction links that evidence to questions, targets, and scoring rubrics; quality checks cover report support, timepoint alignment, visual availability, and scoring consistency. Models receive permitted visual inputs and questions, without source reports, masks, measurements, or hidden references. The documented item-level clinical review covers the 70 case trajectories and 420 steps; it does not establish a second clinical read of every benchmark item.
+<p align="center">
+  <a href="docs/assets/benchmark-coverage.png"><img src="docs/assets/benchmark-coverage.png" width="40%" align="middle" alt="Task coverage across five reasoning levels and three evidence conditions"></a>
+  <a href="docs/assets/cohort-diversity.png"><img src="docs/assets/cohort-diversity.png" width="56%" align="middle" alt="Cohort demographics, longitudinal depth, MRI sequence availability, and acquisition mix"></a>
+</p>
 
 ## Key results
 
-The paper evaluates **20 configurations** across general, medical, frontier API, and native-volume VLMs.
+<p align="center">
+  <a href="docs/assets/closed-form-results.png"><img src="docs/assets/closed-form-results.png" width="49%" align="top" alt="Paper Table 2: closed-form accuracy across all model configurations, including its caption and notes"></a>
+  <a href="docs/assets/open-case-results.png"><img src="docs/assets/open-case-results.png" width="49%" align="top" alt="Paper Table 3: open-ended and case reasoning results, including the separate physician sanity-check note"></a>
+</p>
 
-- **Recognition remains fragmented:** the best broad-compatible closed-form accuracy is **41.9%**.
-- **Grounded generation is harder:** the best broad-compatible open-ended clinical pass rate is **19.8%**.
-- **Local successes rarely compose:** the best Step Pass is **24.5%**, while the best full Case Success is **1.4%**.
+<p align="center">
+  <a href="docs/assets/case-reasoning-attrition.png"><img src="docs/assets/case-reasoning-attrition.png" width="400" alt="Figure 4: case reasoning attrition across six steps"></a>
+</p>
 
-Selected configurations from the paper are shown below. All values are percentages; each headline above is the maximum for its metric across configurations.
-
-| Model | Closed<br>Broad | Closed<br>3D | Open pass<br>Broad | Open pass<br>3D | Step<br>Pass | Case<br>Success |
-|---|---:|---:|---:|---:|---:|---:|
-| GPT-5.4 | 40.4 | 42.2 | 19.8 | 15.6 | 24.0 | 0.0 |
-| GPT-5 | 41.9 | 38.3 | 10.5 | 11.7 | 21.7 | 1.4 |
-| GPT-5-mini | 38.2 | 37.5 | 10.6 | 10.4 | 24.5 | 0.0 |
-| Qwen3-VL-30B | 35.1 | 34.8 | 14.4 | 11.7 | 11.7 | 0.0 |
-| Qwen2.5-VL-7B | 33.2 | 33.2 | 4.9 | 3.9 | 9.3 | 1.4 |
-| Lingshu-7B | 36.5 | 35.4 | 6.8 | 3.9 | 6.9 | 0.0 |
-| M3D-LaMed | — | 29.9 | — | 0.0 | 4.8 | 0.0 |
-| RadFM | 18.1 | 15.0 | 4.3 | 2.6 | 0.0 | 0.0 |
-
-[**Full results for all 20 configurations →**](docs/RESULTS.md)
-
-Closed columns report exact-match accuracy by track. Open columns report rubric-based clinical pass, using the release judge `gpt-4o-mini-2024-07-18`. Step Pass averages over 420 decomposed steps; Case Success requires **all six steps in the same case** to pass. **—** denotes an unreported entry. These are distinct metrics and denominators, rather than interchangeable measures of clinical ability.
-
-![Attrition through the six-step case-reasoning chain](docs/assets/case-reasoning-attrition.png)
-
-*Paper figure: the left panel follows same-case survival for GPT-5-mini; the right panel shows per-step pass rates. A model can pass individual steps in different cases while completing no full case.*
-
-The scores are conditioned on the released inputs and judging protocol. Judge-sensitivity audits change exact scores, and supported volume/rendered interfaces do not isolate a causal benefit of volumetric representation. The paper's physician MCQ answerability check uses a separate format and is not included as a directly comparable model baseline.
+[Full metrics and scoring details →](docs/RESULTS.md)
 
 ## Get started
 
-### 1. Install and download the benchmark metadata
+Download the [benchmark metadata](https://huggingface.co/datasets/BrainTRACE-anon/BrainTRACE) and obtain [MR-RATE](https://huggingface.co/datasets/Forithmus/MR-RATE) under its Data Use Agreement. MRI imagery is not redistributed.
+
+<details>
+<summary><strong>Quickstart commands</strong></summary>
+
+### 1. Install and download metadata
 
 ```bash
 git clone https://github.com/lanqz7766/BrainTRACE.git
@@ -90,11 +82,9 @@ python -m pip install -r requirements.txt
 python -c "from huggingface_hub import snapshot_download; snapshot_download('BrainTRACE-anon/BrainTRACE', repo_type='dataset', local_dir='./braintrace_dataset')"
 ```
 
-The dataset remains at its existing Hugging Face namespace. It contains questions, ground truth, rubrics, and pointers to the required evidence; **MRI imagery is not redistributed**.
+### 2. Render MR-RATE inputs
 
-### 2. Obtain MR-RATE and render inputs locally
-
-Obtain the upstream data from [MR-RATE](https://huggingface.co/datasets/Forithmus/MR-RATE), accept its Data Use Agreement, and place the download under `./mr_rate`. Follow the expected layout in the [rendering guide](reproduction/README.md).
+Place MR-RATE under `./mr_rate` using the layout in the [rendering guide](reproduction/README.md).
 
 ```bash
 python reproduction/render_images.py \
@@ -105,7 +95,7 @@ python reproduction/render_images.py \
 
 ### 3. Run a VLM
 
-The bundled single-turn adapter supports OpenAI, Anthropic, and Google APIs. Set the relevant API key in your shell environment; OpenAI inference and the default audit judge use `OPENAI_API_KEY`.
+Set `OPENAI_API_KEY` in your shell for this OpenAI example and the default scoring judge.
 
 ```bash
 python eval/vlm_eval_api.py \
@@ -120,7 +110,7 @@ python eval/vlm_eval_api.py \
   --skip-existing
 ```
 
-For the case-reasoning track, use the dedicated driver described in [the inference guide](eval/README.md). Open-weight and native-volume models require their own inference backends and should write predictions in the documented adapter format. Image limits and provider settings are part of each model's evaluation configuration; see the [run manifest](reproduction/leaderboard_runs.csv).
+See the [inference guide](eval/README.md) for other APIs, case reasoning, and prediction formats. Open-weight and native-volume models require separate backends.
 
 ### 4. Score predictions
 
@@ -132,21 +122,11 @@ python scoring/score.py \
   --judge-model gpt-4o-mini-2024-07-18
 ```
 
-Use the corresponding case-reasoning output directory when scoring that track. Results are written to `summary.json`, with closed-form summaries and judge audit records in the score directory. To score only closed-form items without judge calls, add `--mode closed`.
+Outputs include `summary.json` and judge audit records. Add `--mode closed` to score closed-form items without judge calls; use the case output directory for case-reasoning predictions. Paper comparisons require the recorded inputs and model/judge settings in the [run manifest](reproduction/leaderboard_runs.csv).
 
-Complete prediction coverage, the same inputs and rendering rules, and matching model/judge settings are needed to compare against the paper. API models and judges can vary between runs; the table reports the recorded paper results, rather than guaranteeing identical scores on every rerun.
+</details>
 
-## Repository guide
-
-| Resource | Purpose |
-|---|---|
-| [Rendering](reproduction/README.md) | Materialize permitted images and volumes from your MR-RATE download |
-| [Inference](eval/README.md) | API adapters, case-reasoning driver, and prediction format |
-| [Scoring](scoring/README.md) | Unified scorer, output files, and judge settings |
-| [Scoring specification](docs/SCORING.md) | Rubrics, critical-fact checks, and aggregation |
-| [Taxonomy](docs/TAXONOMY.md) | Task templates and reasoning levels |
-| [Paper results](docs/RESULTS.md) | Track-level metrics for all 20 configurations |
-| [Run manifest](reproduction/leaderboard_runs.csv) | Recorded adapter flags and run settings |
+**Documentation:** [Rendering](reproduction/README.md) · [Inference](eval/README.md) · [Scoring](scoring/README.md) · [Rubrics](docs/SCORING.md) · [Taxonomy](docs/TAXONOMY.md) · [Full results](docs/RESULTS.md) · [Run manifest](reproduction/leaderboard_runs.csv)
 
 ## Citation
 
