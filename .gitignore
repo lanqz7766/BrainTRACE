@@ -44,3 +44,7 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# Public paper figures used by the README (not rendered patient imagery)
+!docs/assets/braintrace-overview.png
+!docs/assets/case-reasoning-attrition.png
