@@ -2,7 +2,7 @@
 
 This page reproduces the track-level columns of the paper's closed-form diagnostic table (`tab:closed-diagnostic`) and open-ended/case-reasoning table (`tab:open-v06`). It covers all **20 model configurations**, in the paper's group order. Values below come from those manuscript tables; the run manifest is the companion record for adapter settings.
 
-[Paper / OpenReview](https://openreview.net/forum?id=hXktXOmwp6) · [README](../README.md) · [Run manifest](../reproduction/leaderboard_runs.csv)
+[Paper / arXiv](https://arxiv.org/abs/2610.06571) · [OpenReview](https://openreview.net/forum?id=hXktXOmwp6) · [README](../README.md) · [Run manifest](../reproduction/leaderboard_runs.csv)
 
 ## Track-level results
 

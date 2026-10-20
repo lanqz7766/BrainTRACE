@@ -16,7 +16,8 @@
 </p>
 
 <p align="center">
-  <a href="https://openreview.net/forum?id=hXktXOmwp6">Paper / OpenReview</a> ·
+  <a href="https://arxiv.org/abs/2610.06571">Paper / arXiv</a> ·
+  <a href="https://openreview.net/forum?id=hXktXOmwp6">OpenReview</a> ·
   <a href="https://huggingface.co/datasets/BrainTRACE-anon/BrainTRACE">Dataset</a> ·
   <a href="#key-results">Results</a> · <a href="#get-started">Get started</a> · <a href="#citation">Citation</a>
 </p>
@@ -131,15 +132,18 @@ Outputs include `summary.json` and judge audit records. Add `--mode closed` to s
 ## Citation
 
 ```bibtex
-@inproceedings{lan2026braintrace,
-  title     = {BrainTRACE: Tracing Longitudinal, Multimodal, and Volumetric Evidence in Brain MRI Clinical Reasoning},
-  author    = {Lan, Qizhen and Fan, Mengchen and Zhang, Hang and Duan, Jingwei and Lin, Moule and Chen, Jialin and Geng, Baocheng and Jiang, Xiaoqian},
-  booktitle = {Advances in Neural Information Processing Systems},
-  year      = {2026},
-  note      = {Evaluations and Datasets Track},
-  url       = {https://openreview.net/forum?id=hXktXOmwp6}
+@misc{lan2026braintrace,
+  title         = {BrainTRACE: Tracing Longitudinal, Multimodal, and Volumetric Evidence in Brain MRI Clinical Reasoning},
+  author        = {Lan, Qizhen and Fan, Mengchen and Zhang, Hang and Duan, Jingwei and Lin, Moule and Chen, Jialin and Geng, Baocheng and Jiang, Xiaoqian},
+  year          = {2026},
+  eprint        = {2610.06571},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2610.06571}
 }
 ```
+
+Dataset version: [`1.0.1`](https://huggingface.co/datasets/lanqz7766/BrainTRACE).
 
 ## License and contact
 
