@@ -143,7 +143,7 @@ Outputs include `summary.json` and judge audit records. Add `--mode closed` to s
 }
 ```
 
-Dataset version: [`1.0.1`](https://huggingface.co/datasets/lanqz7766/BrainTRACE).
+Dataset version: [`1.0.2`](https://huggingface.co/datasets/lanqz7766/BrainTRACE).
 
 ## License and contact
 
