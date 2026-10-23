@@ -143,7 +143,9 @@ Outputs include `summary.json` and judge audit records. Add `--mode closed` to s
 }
 ```
 
-Dataset version: [`1.0.2`](https://huggingface.co/datasets/lanqz7766/BrainTRACE).
+Dataset version: [`1.0.3`](https://huggingface.co/datasets/lanqz7766/BrainTRACE).
+
+v1.0.3 corrects annotations and reference answers, updates evidence pointers, and replaces selected items while preserving task definitions, slice-selection rules, and the 6,923 source rows / 7,273 scored instances. [v1.0.2 remains available](https://huggingface.co/datasets/lanqz7766/BrainTRACE/tree/d951d178c26ed0cf39a892e39766549d3746f906) for reproducibility.
 
 ## License and contact
 
