@@ -11,7 +11,7 @@ Pipeline (per item):
   2. Light text normalisation: remove a leading ``Answer:`` style label,
      remove a leading MCQ prefix (``(A)``, ``A.``, ``A)``, ``[A]``, ``A -``),
      lowercase, trim whitespace and one trailing period.
-  3. If the normalised prediction still starts with a bare letter ``A``-``E``
+  3. If the normalised prediction still starts with a bare letter ``A``-``F``
      (with optional brackets/parens, terminated by whitespace, punctuation,
      or end-of-string), resolve that letter against the parquet's
      ``options`` array and compare the resolved option text to ``gt_value``.
@@ -52,9 +52,9 @@ from typing import Any, Iterable, Mapping, Optional, Sequence
 
 # Strip a leading MCQ prefix in any of these forms:
 #   "(A) ...", "A) ...", "A. ...", "A: ...", "[A] ...", "A - ..."
-# The letter must be A-E (we cap option count at 5 in the dataset);
+# The letter must be A-F (the largest option count in the dataset is 6, in L2.3);
 # the prefix must be followed by at least one whitespace char.
-_MCQ_PREFIX = re.compile(r"^\s*(?:\(?\[?([A-Ea-e])\]?[\.\)\:\-]|\(([A-Ea-e])\))\s+")
+_MCQ_PREFIX = re.compile(r"^\s*(?:\(?\[?([A-Fa-f])\]?[\.\)\:\-]|\(([A-Fa-f])\))\s+")
 
 # Strip a leading "Answer:" style label.
 _ANSWER_LABEL = re.compile(
@@ -65,12 +65,12 @@ _ANSWER_LABEL = re.compile(
 # Permissive "starts with a letter" detector for the letter-only fallback.
 # Accepts forms like "D", "D.", "(D)", "[D]", "D ...", "D-explanation".
 # Uses lookahead so the match does not consume the trailing context.
-_LEADING_LETTER = re.compile(r"^\s*\(?\[?([A-Ea-e])\]?\)?(?=[^A-Za-z0-9]|$)")
+_LEADING_LETTER = re.compile(r"^\s*\(?\[?([A-Fa-f])\]?\)?(?=[^A-Za-z0-9]|$)")
 
 # "D (FLAIR)" / "B) FLAIR (post-contrast)" echo: a leading letter
 # immediately followed by a parenthesised substantive phrase. We strip
 # the letter and accept the parenthesised text as the substantive answer.
-_LETTER_THEN_PAREN = re.compile(r"^\s*\(?\[?[A-Ea-e]\]?\)?\s*\(([^)]+)\)\s*$")
+_LETTER_THEN_PAREN = re.compile(r"^\s*\(?\[?[A-Fa-f]\]?\)?\s*\(([^)]+)\)\s*$")
 
 
 # ---------------------------------------------------------------------------
@@ -122,7 +122,7 @@ def normalise_closed(text: Optional[str]) -> str:
 
 
 def letter_only(text: Optional[str]) -> Optional[str]:
-    """Return the leading A-E letter (lowercased) if the prediction
+    """Return the leading A-F letter (lowercased) if the prediction
     starts with one, else ``None``. Applies ``strip_think`` first.
 
     Permissive: matches ``"D"``, ``"D."``, ``"(D)"``, ``"[D]"``,

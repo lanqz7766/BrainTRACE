@@ -56,11 +56,11 @@ optional `options` array, the scorer applies these steps in order:
 3. **Strip a leading answer label** of the form `Answer:` /
    `The correct answer is` / `Final answer is` (case-insensitive).
 4. **Strip a leading MCQ prefix** in any of these forms, where the
-   letter is `A`-`E`: `(A) `, `A) `, `A. `, `A: `, `[A] `, `A - `.
+   letter is `A`-`F`: `(A) `, `A) `, `A. `, `A: `, `[A] `, `A - `.
 5. **Lowercase, trim whitespace, strip one trailing period.**
 6. Compare the normalised prediction to the normalised `gt_value`.
 7. **Letter-only fallback.** If steps 1-6 did not match and the
-   prediction *starts* with a single letter `A`-`E` (with optional
+   prediction *starts* with a single letter `A`-`F` (with optional
    `(`/`[`/`)` brackets) followed by whitespace, punctuation, or
    end-of-string, resolve that letter against `options` and compare the
    resolved option text to `gt_value`. Items with no `options` array
